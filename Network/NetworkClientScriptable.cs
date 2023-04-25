@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Events;
 using Kalkatos.Network.Unity;
+using Kalkatos.Network.Model;
 using System.Collections.Generic;
 
 namespace Kalkatos.UnityGame.Scriptable.Network
@@ -11,6 +12,7 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 		public StateBuilder StateBuilder;
 		public PlayerDataBuilder PlayerDataBuilder;
 		public UnityEvent OnNotConnected;
+		public UnityEvent OnReconnected;
 		public UnityEvent OnConnectSuccess;
 		public UnityEvent OnConnectFailure;
 		public UnityEvent OnFindMatchSuccess;
@@ -24,18 +26,38 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 		public UnityEvent OnGetMatchStateSuccess;
 		public UnityEvent OnGetMatchStateFailure;
 
+		private bool isConnected = true;
+
 		public void SetNickname (string nick)
 		{
+			if (Application.internetReachability == NetworkReachability.NotReachable)
+			{
+				SetAsNotConnected();
+				return;
+			}
+			SetAsConnected();
 			NetworkClient.SetNickname(nick);
 		}
 
 		public void SetPlayerData (SignalState playerDataChange)
 		{
+			if (Application.internetReachability == NetworkReachability.NotReachable)
+			{
+				SetAsNotConnected();
+				return;
+			}
+			SetAsConnected();
 			NetworkClient.SetPlayerData(new Dictionary<string, string>() { { playerDataChange.Key, playerDataChange.Value } });
 		}
 
 		public void SetPlayerData (string key)
 		{
+			if (Application.internetReachability == NetworkReachability.NotReachable)
+			{
+				SetAsNotConnected();
+				return;
+			}
+			SetAsConnected();
 			if (PlayerDataBuilder == null || PlayerDataBuilder.MyInfo.OtherData == null)
 				return;
 			foreach (var item in PlayerDataBuilder.MyInfo.OtherData)
@@ -49,18 +71,27 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 			Logger.LogWarning($"[NetworkClientScriptable] Couldn't find player data with key {key}.");
 		}
 
+		public void UpdateConnection ()
+		{
+			if (Application.internetReachability == NetworkReachability.NotReachable)
+				SetAsNotConnected();
+			else
+				SetAsConnected();
+		}
+
 		public void Connect ()
 		{
 			NetworkClient.Connect(
 				(success) =>
 				{
+					SetAsConnected();
 					PlayerDataBuilder?.UpdatePlayerData();
 					OnConnectSuccess?.Invoke();
 				},
 				(failure) =>
 				{
-					if (failure.Tag == Kalkatos.Network.Model.NetworkErrorTag.NotConnected)
-						OnNotConnected?.Invoke();
+					if (failure.Tag == NetworkErrorTag.NotConnected)
+						SetAsNotConnected();
 					else
 						OnConnectFailure?.Invoke();
 				});
@@ -68,7 +99,19 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 
 		public void FindMatch ()
 		{
-			NetworkClient.FindMatch((success) => OnFindMatchSuccess?.Invoke(), (failure) => OnFindMatchFailure?.Invoke());
+			NetworkClient.FindMatch(
+				(success) =>
+				{ 
+					SetAsConnected(); 
+					OnFindMatchSuccess?.Invoke(); 
+				},
+				(failure) =>
+				{
+					if (failure.Tag == NetworkErrorTag.NotConnected)
+						SetAsNotConnected();
+					else
+						OnFindMatchFailure?.Invoke();
+				});
 		}
 
 		public void GetMatch ()
@@ -76,37 +119,88 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 			NetworkClient.GetMatch(
 				(success) =>
 				{
+					SetAsConnected();
 					PlayerDataBuilder?.UpdateOtherPlayersData();
 					OnGetMatchSuccess?.Invoke();
-				}, 
-				(failure) => OnGetMatchFailure?.Invoke());
+				},
+				(failure) =>
+				{
+					if (failure.Tag == NetworkErrorTag.NotConnected)
+						SetAsNotConnected();
+					else
+						OnGetMatchFailure?.Invoke();
+				});
 		}
 
 		public void LeaveMatch ()
 		{
-			NetworkClient.LeaveMatch((success) => OnLeaveMatchSuccess?.Invoke(), (failure) => OnLeaveMatchFailure?.Invoke());
+			NetworkClient.LeaveMatch(
+				(success) =>
+				{
+					SetAsConnected();
+					OnLeaveMatchSuccess?.Invoke();
+				},
+				(failure) =>
+				{
+					if (failure.Tag == NetworkErrorTag.NotConnected)
+						SetAsNotConnected();
+					else
+						OnLeaveMatchFailure?.Invoke();
+				});
 		}
 
 		public void SendAction ()
 		{
-			NetworkClient.SendAction(StateBuilder.BuildChangedPieces(NetworkClient.StateInfo), 
-				(success) => 
+			NetworkClient.SendAction(StateBuilder.BuildChangedPieces(NetworkClient.StateInfo),
+				(success) =>
 				{
+					SetAsConnected();
 					OnSendActionSuccess?.Invoke();
 					StateBuilder.ReceiveState(success);
-				}, 
-				(failure) => OnSendActionFailure?.Invoke());
+				},
+				(failure) =>
+				{
+					if (failure.Tag == NetworkErrorTag.NotConnected)
+						SetAsNotConnected();
+					else
+						OnSendActionFailure?.Invoke(); 
+				});
 		}
 
 		public void GetMatchState ()
 		{
 			NetworkClient.GetMatchState(
-				(success) => 
+				(success) =>
 				{
+					SetAsConnected();
 					OnGetMatchStateSuccess?.Invoke();
 					StateBuilder.ReceiveState(success);
-				}, 
-				(failure) => OnGetMatchStateFailure?.Invoke());
+				},
+				(failure) => 
+				{ 
+					if (failure.Tag == NetworkErrorTag.NotConnected) 
+						SetAsNotConnected(); 
+					else 
+						OnGetMatchStateFailure?.Invoke(); 
+				});
+		}
+
+		private void SetAsConnected ()
+		{
+			if (!isConnected)
+			{
+				isConnected = true;
+				OnReconnected?.Invoke();
+			}
+		}
+
+		private void SetAsNotConnected ()
+		{
+			if (isConnected)
+			{
+				isConnected = false;
+				OnNotConnected?.Invoke();
+			}
 		}
 	}
 }
