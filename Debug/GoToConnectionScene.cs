@@ -7,7 +7,7 @@ namespace Kalkatos.UnityGame.Scriptable
     {
         [SerializeField] private ScreenSignal connectionScene;
 
-        void Awake ()
+        private void Start ()
         {
             if (!NetworkClient.IsConnected)
                 connectionScene?.Emit();

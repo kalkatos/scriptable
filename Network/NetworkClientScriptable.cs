@@ -68,7 +68,7 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 					return;
 				}
 			}
-			Logger.LogWarning($"[NetworkClientScriptable] Couldn't find player data with key {key}.");
+			Logger.LogWarning($"[{nameof(NetworkClientScriptable)}] Player data signal with key {key} is not set in the player data builder {PlayerDataBuilder.name}.");
 		}
 
 		public void UpdateConnection ()
