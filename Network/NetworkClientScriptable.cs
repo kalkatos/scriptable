@@ -156,7 +156,6 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 				{
 					SetAsConnected();
 					OnSendActionSuccess?.Invoke();
-					StateBuilder.ReceiveState(success);
 				},
 				(failure) =>
 				{
