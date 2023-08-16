@@ -3,6 +3,8 @@ using UnityEngine.Events;
 using Kalkatos.Network.Unity;
 using Kalkatos.Network.Model;
 using System.Collections.Generic;
+using UnityEditorInternal;
+using static UnityEditor.Progress;
 
 namespace Kalkatos.UnityGame.Scriptable.Network
 {
@@ -47,7 +49,7 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 				return;
 			}
 			SetAsConnected();
-			NetworkClient.SetPlayerData(new Dictionary<string, string>() { { playerDataChange.Key, playerDataChange.Value } });
+			NetworkClient.SetPlayerData(new Dictionary<string, string>() { { playerDataChange.Key, playerDataChange.Value } }, null, null);
 		}
 
 		public void SetPlayerData (string key)
@@ -60,11 +62,18 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 			SetAsConnected();
 			if (PlayerDataBuilder == null || PlayerDataBuilder.MyInfo.OtherData == null)
 				return;
+			if (key == "Nickname")
+			{
+				NetworkClient.SetPlayerData(new Dictionary<string, string>() { { key, PlayerDataBuilder.MyInfo.Nickname.Value } }, 
+					(success) => PlayerDataBuilder.MyInfo.Nickname.EmitWithParam(success.Nickname), 
+					null);
+				return;
+			}
 			foreach (var item in PlayerDataBuilder.MyInfo.OtherData)
 			{
 				if (item.Key == key)
 				{
-					NetworkClient.SetPlayerData(new Dictionary<string, string>() { { key, item.Value } });
+					NetworkClient.SetPlayerData(new Dictionary<string, string>() { { key, item.Value } }, null, null);
 					return;
 				}
 			}
