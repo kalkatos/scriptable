@@ -3,8 +3,6 @@ using UnityEngine.Events;
 using Kalkatos.Network.Unity;
 using Kalkatos.Network.Model;
 using System.Collections.Generic;
-using UnityEditorInternal;
-using static UnityEditor.Progress;
 
 namespace Kalkatos.UnityGame.Scriptable.Network
 {
