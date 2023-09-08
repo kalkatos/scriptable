@@ -36,6 +36,8 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 
 		public void ReceiveState (StateInfo stateInfo)
 		{
+			if (stateInfo == null) 
+				return;
 			foreach (var item in PublicStateSignals)
 				if (stateInfo.PublicProperties.ContainsKey(item.Key) && stateInfo.PublicProperties[item.Key] != item.Value)
 					item.EmitWithParam(stateInfo.PublicProperties[item.Key]);
