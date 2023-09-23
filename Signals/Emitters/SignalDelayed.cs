@@ -10,8 +10,15 @@ namespace Kalkatos.UnityGame.Scriptable
 	{
 		[PropertyOrder(2)] public UnityEvent DelayedEvent;
 
-		public override void EmitWithParam (float seconds)
+        public override void Emit ()
+        {
+			EmitWithParam(Value);
+        }
+
+        public override void EmitWithParam (float seconds)
 		{
+			Log();
+			OnSignalEmittedWithParam?.Invoke(seconds);
 			TimedEvent.Create(seconds, DelayedEvent);
 		}
 
