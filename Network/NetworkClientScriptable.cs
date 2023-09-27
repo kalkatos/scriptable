@@ -27,7 +27,6 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 		public UnityEvent OnGetMatchStateFailure;
 
 		private bool isConnected = true;
-		private bool isRetryingSendAction;
 
 		public void SetNickname (string nick)
 		{
@@ -165,25 +164,13 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 				{
 					SetAsConnected();
 					OnSendActionSuccess?.Invoke();
-                    isRetryingSendAction = false;
                 },
 				(failure) =>
 				{
 					if (failure.Tag == NetworkErrorTag.NotConnected)
 						SetAsNotConnected();
 					else
-					{
-						if (!isRetryingSendAction)
-						{
-							isRetryingSendAction = true;
-							SendAction();
-						}
-						else
-						{
-							isRetryingSendAction = false;
                             OnSendActionFailure?.Invoke();
-						}
-					}
 				});
 		}
 
