@@ -1,4 +1,9 @@
-﻿using Kalkatos.Network.Model;
+﻿// (c) 2023 Alex Kalkatos
+// This code is licensed under MIT license (see LICENSE.txt for details)
+
+#if KALKATOS_NETWORK
+
+using Kalkatos.Network.Model;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -47,3 +52,5 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 		}
 	}
 }
+
+#endif

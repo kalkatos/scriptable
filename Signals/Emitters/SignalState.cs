@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using Sirenix.OdinInspector;
 
-namespace Kalkatos.UnityGame.Scriptable.Network
+namespace Kalkatos.UnityGame.Scriptable
 {
 	[CreateAssetMenu(fileName = "NewSignalState", menuName = "Signals/Signal (State)", order = 4)]
 	public class SignalState : TypedSignal<string>
