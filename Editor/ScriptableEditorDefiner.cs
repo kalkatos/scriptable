@@ -5,7 +5,7 @@ using UnityEditor;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Kalkatos.Network.Unity
+namespace Kalkatos.Scriptable.Unity
 {
     [InitializeOnLoad]
     public class ScriptableEditorDefiner : Editor
