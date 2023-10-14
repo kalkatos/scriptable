@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
-using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;  
+#endif
 
 namespace Kalkatos.UnityGame.Scriptable
 {
@@ -8,7 +10,10 @@ namespace Kalkatos.UnityGame.Scriptable
 	public class ScreenSignal : TypedSignal<bool>
 	{
 		public bool IsScene;
-		[ShowIf(nameof(IsScene))] public bool LoadAsync;
+#if ODIN_INSPECTOR
+		[ShowIf(nameof(IsScene))] 
+#endif
+        public bool LoadAsync;
 
 		public override void Emit ()
 		{

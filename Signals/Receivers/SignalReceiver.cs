@@ -1,7 +1,9 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Events;
-using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;  
+#endif
 
 namespace Kalkatos.UnityGame.Scriptable
 {
@@ -25,12 +27,30 @@ namespace Kalkatos.UnityGame.Scriptable
 	[Serializable]
 	public class SignalReceiverBit
 	{
-		[OnValueChanged(nameof(VerifySignal)), SerializeField] private Signal signal;
-		[HideIf(nameof(isAnyOtherTypedSignal)), SerializeField] private UnityEvent action;
-		[ShowIf(nameof(isBoolSignal)), SerializeField] private ValueBinding<bool>[] BoolValueBindings;
-		[ShowIf(nameof(isIntSignal)), SerializeField] private ValueBinding<int>[] IntValueBindings;
-		[ShowIf(nameof(isStringSignal)), SerializeField] private ValueBinding<string>[] StringValueBindings;
-		[ShowIf(nameof(isFloatSignal)), SerializeField] private ValueBinding<float>[] FloatValueBindings;
+#if ODIN_INSPECTOR
+		[OnValueChanged(nameof(VerifySignal))] 
+#endif
+        [SerializeField] private Signal signal;
+#if ODIN_INSPECTOR
+		[HideIf(nameof(isAnyOtherTypedSignal))] 
+#endif
+        [SerializeField] private UnityEvent action;
+#if ODIN_INSPECTOR
+		[ShowIf(nameof(isBoolSignal))] 
+#endif
+        [SerializeField] private ValueBinding<bool>[] BoolValueBindings;
+#if ODIN_INSPECTOR
+		[ShowIf(nameof(isIntSignal))] 
+#endif
+        [SerializeField] private ValueBinding<int>[] IntValueBindings;
+#if ODIN_INSPECTOR
+		[ShowIf(nameof(isStringSignal))] 
+#endif
+        [SerializeField] private ValueBinding<string>[] StringValueBindings;
+#if ODIN_INSPECTOR
+		[ShowIf(nameof(isFloatSignal))] 
+#endif
+        [SerializeField] private ValueBinding<float>[] FloatValueBindings;
 		[HideInInspector, SerializeField] private bool isAnyOtherTypedSignal;
 		[HideInInspector, SerializeField] private bool isBoolSignal;
 		[HideInInspector, SerializeField] private bool isIntSignal;

@@ -1,13 +1,17 @@
 ﻿using UnityEngine;
-using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;  
+#endif
 
 namespace Kalkatos.UnityGame.Scriptable
 {
 	[CreateAssetMenu(fileName = "NewSignalState", menuName = "Signals/Signal (State)", order = 4)]
 	public class SignalState : TypedSignal<string>
 	{
-		[PropertyOrder(0)]
-		public string Key;
+#if ODIN_INSPECTOR
+		[PropertyOrder(0)] 
+#endif
+        public string Key;
 
 		public override void Emit ()
 		{

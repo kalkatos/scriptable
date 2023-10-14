@@ -1,4 +1,6 @@
-﻿using Sirenix.OdinInspector;
+﻿#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;  
+#endif
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -8,7 +10,10 @@ namespace Kalkatos.UnityGame.Scriptable
 	[CreateAssetMenu(fileName = "NewSignalDelayed", menuName = "Signals/Signal (Delayed)", order = 8)]
 	public class SignalDelayed : TypedSignal<float>
 	{
-		[PropertyOrder(2)] public UnityEvent DelayedEvent;
+#if ODIN_INSPECTOR
+		[PropertyOrder(2)]  
+#endif
+        public UnityEvent DelayedEvent;
 
         public override void Emit ()
         {

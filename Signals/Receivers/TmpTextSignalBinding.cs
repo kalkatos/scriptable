@@ -1,4 +1,6 @@
-﻿using Sirenix.OdinInspector;
+﻿#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;  
+#endif
 using TMPro;
 using UnityEngine;
 
@@ -7,8 +9,14 @@ namespace Kalkatos.UnityGame.Scriptable
 	public class TmpTextSignalBinding : MonoBehaviour
 	{
 		[SerializeField] private TypedSignal<string> signal;
-		[SerializeField, HideIf(nameof(textComponentInputField))] private TMP_Text textComponent;
-		[SerializeField, HideIf(nameof(textComponent))] private TMP_InputField textComponentInputField;
+#if ODIN_INSPECTOR
+		[HideIf(nameof(textComponentInputField))] 
+#endif
+        [SerializeField] private TMP_Text textComponent;
+#if ODIN_INSPECTOR
+		[HideIf(nameof(textComponent))] 
+#endif
+        [SerializeField] private TMP_InputField textComponentInputField;
 
 		private void Reset ()
 		{

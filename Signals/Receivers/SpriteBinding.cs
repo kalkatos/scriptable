@@ -1,4 +1,6 @@
-﻿using Sirenix.OdinInspector;
+﻿#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;  
+#endif
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -7,12 +9,30 @@ namespace Kalkatos.UnityGame.Scriptable
 	public class SpriteBinding : MonoBehaviour
 	{
 #pragma warning disable
-		[SerializeField, LabelText("Value"), HorizontalGroup("Value", 30)] private ValueType valueType;
-		[SerializeField, HideLabel, HorizontalGroup("Value"), ShowIf(nameof(valueType), ValueType.Int)] private IntValueGetter indexValue;
-		[SerializeField, HideLabel, HorizontalGroup("Value"), ShowIf(nameof(valueType), ValueType.String)] private StringValueGetter nameValue;
-		[SerializeField, LabelText("Renderer"), HorizontalGroup("Renderer", 30)] private VisualType visualType;
-		[SerializeField, HideLabel, HorizontalGroup("Renderer"), ShowIf(nameof(visualType), VisualType.Sprite)] private SpriteRenderer spriteRenderer;
-		[SerializeField, HideLabel, HorizontalGroup("Renderer"), ShowIf(nameof(visualType), VisualType.UI)] private Image uiImage;
+#if ODIN_INSPECTOR
+		[LabelText("Value"), HorizontalGroup("Value", 30)] 
+#endif
+        [SerializeField] private ValueType valueType;
+#if ODIN_INSPECTOR
+		[HideLabel, HorizontalGroup("Value"), ShowIf(nameof(valueType), ValueType.Int)] 
+#endif
+        [SerializeField] private IntValueGetter indexValue;
+#if ODIN_INSPECTOR
+		[HideLabel, HorizontalGroup("Value"), ShowIf(nameof(valueType), ValueType.String)] 
+#endif
+        [SerializeField] private StringValueGetter nameValue;
+#if ODIN_INSPECTOR
+		[LabelText("Renderer"), HorizontalGroup("Renderer", 30)] 
+#endif
+        [SerializeField] private VisualType visualType;
+#if ODIN_INSPECTOR
+		[HideLabel, HorizontalGroup("Renderer"), ShowIf(nameof(visualType), VisualType.Sprite)] 
+#endif
+        [SerializeField] private SpriteRenderer spriteRenderer;
+#if ODIN_INSPECTOR
+		[HideLabel, HorizontalGroup("Renderer"), ShowIf(nameof(visualType), VisualType.UI)] 
+#endif
+        [SerializeField] private Image uiImage;
 		[SerializeField] private SpriteListScriptable sprites;
 #pragma warning restore
 

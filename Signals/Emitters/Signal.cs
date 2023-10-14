@@ -1,4 +1,6 @@
-﻿using Sirenix.OdinInspector;
+﻿#if ODIN_INSPECTOR
+using Sirenix.OdinInspector;  
+#endif
 using System;
 using UnityEngine;
 using UnityEngine.Events;
@@ -27,9 +29,15 @@ namespace Kalkatos.UnityGame.Scriptable
 	{
 		public UnityEvent<T> OnSignalEmittedWithParam;
 
-		[PropertyOrder(1)] public T Value;
+#if ODIN_INSPECTOR
+		[PropertyOrder(1)] 
+#endif
+        public T Value;
 		[Space(10)]
-		[PropertyOrder(5), SerializeField] private ValueBinding<T>[] ValueBindings;
+#if ODIN_INSPECTOR
+		[PropertyOrder(5)] 
+#endif
+        [SerializeField] private ValueBinding<T>[] ValueBindings;
 
 		public virtual void EmitWithParam (T param) 
 		{
@@ -53,8 +61,14 @@ namespace Kalkatos.UnityGame.Scriptable
 	[Serializable]
 	public class ValueBinding<T>
 	{
-		[HorizontalGroup(0.7f), LabelText("Condition")] public Equality Equality;
-		[HorizontalGroup, HideLabel, HideIf(nameof(Equality), Equality.Any)] public T ExpectedValue;
+#if ODIN_INSPECTOR
+		[HorizontalGroup(0.7f), LabelText("Condition")] 
+#endif
+        public Equality Equality;
+#if ODIN_INSPECTOR
+		[HorizontalGroup, HideLabel, HideIf(nameof(Equality), Equality.Any)]  
+#endif
+        public T ExpectedValue;
 		public UnityEvent<T> Event;
 
 		public void TreatValue (T value)
