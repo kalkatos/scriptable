@@ -1,12 +1,12 @@
 ﻿#if ODIN_INSPECTOR
-using Sirenix.OdinInspector;  
+using Sirenix.OdinInspector;
 #endif
 using TMPro;
 using UnityEngine;
 
 namespace Kalkatos.UnityGame.Scriptable
 {
-	public class TmpTextSignalBinding : MonoBehaviour
+    public class TmpTextSignalBinding : MonoBehaviour
 	{
 		[SerializeField] private TypedSignal<string> signal;
 #if ODIN_INSPECTOR
