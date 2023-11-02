@@ -39,7 +39,17 @@ namespace Kalkatos.UnityGame.Scriptable
 #endif
         [SerializeField] private ValueBinding<T>[] ValueBindings;
 
-		public virtual void EmitWithParam (T param) 
+        public override void Emit ()
+        {
+			Log();
+			OnSignalEmitted?.Invoke();
+			OnSignalEmittedWithParam?.Invoke(Value);
+			if (ValueBindings != null)
+				foreach (var item in ValueBindings)
+					item.TreatValue(Value);
+		}
+
+        public virtual void EmitWithParam (T param) 
 		{
 			Value = param;
 			Log();
@@ -78,16 +88,16 @@ namespace Kalkatos.UnityGame.Scriptable
 				|| (Equality == Equality.NotEquals && !value.Equals(ExpectedValue))
 				|| (Equality == Equality.GreaterThan &&
 					((typeof(T) == typeof(int) && int.Parse(value.ToString()) > int.Parse(ExpectedValue.ToString()))
-					|| (typeof(T) == typeof(float) && int.Parse(value.ToString()) > float.Parse(ExpectedValue.ToString()))))
+					|| (typeof(T) == typeof(float) && float.Parse(value.ToString()) > float.Parse(ExpectedValue.ToString()))))
 				|| (Equality == Equality.LessThan &&
 					((typeof(T) == typeof(int) && int.Parse(value.ToString()) < int.Parse(ExpectedValue.ToString()))
-					|| (typeof(T) == typeof(float) && int.Parse(value.ToString()) < float.Parse(ExpectedValue.ToString()))))
+					|| (typeof(T) == typeof(float) && float.Parse(value.ToString()) < float.Parse(ExpectedValue.ToString()))))
 				|| (Equality == Equality.GreaterThanOrEquals &&
 					((typeof(T) == typeof(int) && int.Parse(value.ToString()) >= int.Parse(ExpectedValue.ToString()))
-					|| (typeof(T) == typeof(float) && int.Parse(value.ToString()) >= float.Parse(ExpectedValue.ToString()))))
+					|| (typeof(T) == typeof(float) && float.Parse(value.ToString()) >= float.Parse(ExpectedValue.ToString()))))
 				|| (Equality == Equality.LessThanOrEquals &&
 					((typeof(T) == typeof(int) && int.Parse(value.ToString()) <= int.Parse(ExpectedValue.ToString()))
-					|| (typeof(T) == typeof(float) && int.Parse(value.ToString()) <= float.Parse(ExpectedValue.ToString()))))
+					|| (typeof(T) == typeof(float) && float.Parse(value.ToString()) <= float.Parse(ExpectedValue.ToString()))))
 				)
 				Event?.Invoke(value);
 		}

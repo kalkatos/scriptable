@@ -37,17 +37,29 @@ namespace Kalkatos.UnityGame.Scriptable
                 bind.Initialize(this);
                 switch (bind.Signal)
                 {
-                    case TypedSignal<bool>:
-                        ((TypedSignal<bool>)bind.Signal).Value = Storage.Load(bind.Key, 0) == 1;
+                    case SignalBool:
+                        SignalBool signalBool = (SignalBool)bind.Signal;
+                        bool boolValue = Storage.Load(bind.Key, 0) == 1;
+                        signalBool.Value = boolValue;
+                        signalBool.DefaultValue = boolValue;
                         break;
-                    case TypedSignal<string>:
-                        ((TypedSignal<string>)bind.Signal).Value = Storage.Load(bind.Key, "");
+                    case SignalString:
+                        SignalString signalString = (SignalString)bind.Signal;
+                        string stringValue = Storage.Load(bind.Key, "");
+                        signalString.Value = stringValue;
+                        signalString.DefaultValue = stringValue;
                         break;
-                    case TypedSignal<int>:
-                        ((TypedSignal<int>)bind.Signal).Value = Storage.Load(bind.Key, 0);
+                    case SignalInt:
+                        SignalInt signalInt = (SignalInt)bind.Signal;
+                        int intValue = Storage.Load(bind.Key, 0);
+                        signalInt.Value = intValue;
+                        signalInt.DefaultValue = intValue;
                         break;
-                    case TypedSignal<float>:
-                        ((TypedSignal<float>)bind.Signal).Value = Storage.Load(bind.Key, 0f);
+                    case SignalFloat:
+                        SignalFloat signalFloat = (SignalFloat)bind.Signal;
+                        float floatValue = Storage.Load(bind.Key, 0f);
+                        signalFloat.Value = floatValue;
+                        signalFloat.DefaultValue = floatValue;
                         break;
                     default:
                         Logger.LogWarning($"Signal binding {bind.Signal} is not a TypedSignal.");
