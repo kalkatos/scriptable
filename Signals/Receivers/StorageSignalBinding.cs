@@ -45,19 +45,21 @@ namespace Kalkatos.UnityGame.Scriptable
                         break;
                     case SignalString:
                         SignalString signalString = (SignalString)bind.Signal;
-                        string stringValue = Storage.Load(bind.Key, "");
+                        string stringValue = Storage.Load(bind.Key, bind.DefaultValue);
                         signalString.Value = stringValue;
                         signalString.DefaultValue = stringValue;
                         break;
                     case SignalInt:
                         SignalInt signalInt = (SignalInt)bind.Signal;
-                        int intValue = Storage.Load(bind.Key, 0);
+                        int defaultInt = int.TryParse(bind.DefaultValue, out int parsedInt) ? parsedInt : 0;
+                        int intValue = Storage.Load(bind.Key, defaultInt);
                         signalInt.Value = intValue;
                         signalInt.DefaultValue = intValue;
                         break;
                     case SignalFloat:
                         SignalFloat signalFloat = (SignalFloat)bind.Signal;
-                        float floatValue = Storage.Load(bind.Key, 0f);
+                        float defaultFloat = float.TryParse(bind.DefaultValue, out float parsedFloat) ? parsedFloat : 0f;
+                        float floatValue = Storage.Load(bind.Key, defaultFloat);
                         signalFloat.Value = floatValue;
                         signalFloat.DefaultValue = floatValue;
                         break;
@@ -80,6 +82,7 @@ namespace Kalkatos.UnityGame.Scriptable
     public class SaveBinding
     {
         public string Key;
+        public string DefaultValue;
         public Signal Signal;
 
         private MonoBehaviour mono;
