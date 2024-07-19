@@ -5,7 +5,9 @@
 
 using Kalkatos.Network.Model;
 using Kalkatos.Network.Unity;
+#if ODIN_INSPECTOR
 using Sirenix.OdinInspector;
+#endif
 using System;
 using UnityEngine;
 
@@ -73,11 +75,26 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 	public class PlayerData
 	{
 		public string Key;
-		[LabelText("Data"), HorizontalGroup(0.3f)] public DataType Type;
-		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Bool)] public SignalBool BoolValue;
-		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Int)] public SignalInt IntValue;
-		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Float)] public SignalFloat FloatValue;
-		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.String)] public SignalString StringValue;
+#if ODIN_INSPECTOR
+		[LabelText("Data"), HorizontalGroup(0.3f)] 
+#endif
+		public DataType Type;
+#if ODIN_INSPECTOR
+		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Bool)]  
+#endif
+        public SignalBool BoolValue;
+#if ODIN_INSPECTOR
+		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Int)]  
+#endif
+        public SignalInt IntValue;
+#if ODIN_INSPECTOR
+		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Float)]  
+#endif
+        public SignalFloat FloatValue;
+#if ODIN_INSPECTOR
+		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.String)]  
+#endif
+        public SignalString StringValue;
 
 		public enum DataType { Bool, Int, Float, String }
 

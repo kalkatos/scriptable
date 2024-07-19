@@ -3,7 +3,9 @@
 
 #if KALKATOS_NETWORK
 
-using Sirenix.OdinInspector;
+#if ODIN_INSPECTOR
+using Sirenix.OdinInspector; 
+#endif
 using UnityEngine;
 
 namespace Kalkatos.UnityGame.Scriptable.Network
@@ -11,7 +13,10 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 	[CreateAssetMenu(fileName = "NewPlayerData", menuName = "Network/Player Data")]
 	public class PlayerDataScriptable : ScriptableObject
 	{
-		[InlineProperty, HideLabel] public PlayerData Data;
+#if ODIN_INSPECTOR
+		[InlineProperty, HideLabel]  
+#endif
+        public PlayerData Data;
 	}
 }
 
