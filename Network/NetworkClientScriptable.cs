@@ -31,7 +31,7 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 		public UnityEvent OnGetMatchStateSuccess;
 		public UnityEvent OnGetMatchStateFailure;
 
-		private bool isConnected = true;
+		[System.NonSerialized] private bool isConnected = true;
 
 		public void SetNickname (string nick)
 		{
