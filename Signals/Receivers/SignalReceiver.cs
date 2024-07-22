@@ -17,7 +17,13 @@ namespace Kalkatos.UnityGame.Scriptable
 				item.Initialize();
 		}
 
-		private void OnDestroy ()
+        private void Start ()
+        {
+            foreach (var item in receivers)
+                item.EmitOnStart();
+        }
+
+        private void OnDestroy ()
 		{
 			foreach (var item in receivers)
 				item.Dispose();
@@ -31,8 +37,9 @@ namespace Kalkatos.UnityGame.Scriptable
 		[OnValueChanged(nameof(VerifySignal))] 
 #endif
         [SerializeField] private Signal signal;
+        [SerializeField] private bool emitOnStart;
 #if ODIN_INSPECTOR
-		[HideIf(nameof(isAnyOtherTypedSignal))] 
+        [HideIf(nameof(isAnyOtherTypedSignal))] 
 #endif
         [SerializeField] private UnityEvent action;
 #if ODIN_INSPECTOR
@@ -57,7 +64,7 @@ namespace Kalkatos.UnityGame.Scriptable
 		[HideInInspector, SerializeField] private bool isStringSignal;
 		[HideInInspector, SerializeField] private bool isFloatSignal;
 
-		public void Initialize ()
+        public void Initialize ()
 		{
 			if (signal is TypedSignal<bool>)
 				((TypedSignal<bool>)signal).OnSignalEmittedWithParam.AddListener(HandleBoolSignalEmitted);
@@ -84,6 +91,22 @@ namespace Kalkatos.UnityGame.Scriptable
 			else
 				signal?.OnSignalEmitted.RemoveListener(HandleSignalEmitted);
 		}
+
+		public void EmitOnStart ()
+		{
+			if (!emitOnStart)
+				return;
+            if (signal is TypedSignal<bool>)
+                HandleBoolSignalEmitted(((TypedSignal<bool>)signal).Value);
+            else if (signal is TypedSignal<int>)
+                HandleIntSignalEmitted(((TypedSignal<int>)signal).Value);
+            else if (signal is TypedSignal<string>)
+                HandleStringSignalEmitted(((TypedSignal<string>)signal).Value);
+            else if (signal is TypedSignal<float>)
+                HandleFloatSignalEmitted(((TypedSignal<float>)signal).Value);
+            else
+                HandleSignalEmitted();
+        }
 
 		private void VerifySignal ()
 		{
