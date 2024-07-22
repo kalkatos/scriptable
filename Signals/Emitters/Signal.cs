@@ -23,7 +23,15 @@ namespace Kalkatos.UnityGame.Scriptable
 			if (SignalsSettings.Instance.EmitDebug)
 				Logger.Log($"[Signal] {name} emitted.");
 		}
-	}
+
+#if ODIN_INSPECTOR
+        [Button("Emit"), PropertyOrder(99)]
+#endif
+        protected void Emit_Debug ()
+        {
+            Emit();
+        }
+    }
 
 	public abstract class TypedSignal<T> : Signal, IValueGetter<T>
 	{
@@ -65,6 +73,14 @@ namespace Kalkatos.UnityGame.Scriptable
 		{
 			if (SignalsSettings.Instance.EmitDebug)
 				Logger.Log($"[{GetType().Name}] {name} emitted. Value = {Value}");
+		}
+
+#if ODIN_INSPECTOR
+        [Button("Emit With Param"), PropertyOrder(99)]
+#endif
+        protected void EmitWithParam_Debug ()
+		{
+			EmitWithParam(GetValue());
 		}
 	}
 
