@@ -39,7 +39,8 @@ namespace Kalkatos.UnityGame.Scriptable
                 {
                     case SignalBool:
                         SignalBool signalBool = (SignalBool)bind.Signal;
-                        bool boolValue = Storage.Load(bind.Key, 0) == 1;
+                        bool defaultBool = bool.TryParse(bind.DefaultValue, out bool parsedBool) ? parsedBool : false;
+                        bool boolValue = Storage.Load(bind.Key, defaultBool.ToString()) == true.ToString();
                         signalBool.Value = boolValue;
                         signalBool.DefaultValue = boolValue;
                         break;
@@ -142,7 +143,7 @@ namespace Kalkatos.UnityGame.Scriptable
         {
             if (Time.time - lastSave > 0.5f)
             {
-                Storage.Save(Key, b ? 1 : 0);
+                Storage.Save(Key, b.ToString());
                 lastSave = Time.time;
                 return;
             }
@@ -204,7 +205,7 @@ namespace Kalkatos.UnityGame.Scriptable
         {
             if (boolSaveScheduled.HasValue)
             {
-                Storage.Save(Key, boolSaveScheduled.Value ? 1 : 0);
+                Storage.Save(Key, boolSaveScheduled.Value.ToString());
                 boolSaveScheduled = null;
             }
             if (stringSaveScheduled != null)
