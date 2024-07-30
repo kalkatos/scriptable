@@ -58,15 +58,22 @@ namespace Kalkatos.UnityGame.Scriptable
 		[ShowIf(nameof(isFloatSignal))] 
 #endif
         [SerializeField] private ValueBinding<float>[] FloatValueBindings;
-		[HideInInspector, SerializeField] private bool isAnyOtherTypedSignal;
+#if ODIN_INSPECTOR
+        [ShowIf(nameof(isComponentSignal))]
+#endif
+        [SerializeField] private ValueBinding<Component>[] ComponentValueBindings;
+        [HideInInspector, SerializeField] private bool isAnyOtherTypedSignal;
 		[HideInInspector, SerializeField] private bool isBoolSignal;
 		[HideInInspector, SerializeField] private bool isIntSignal;
 		[HideInInspector, SerializeField] private bool isStringSignal;
 		[HideInInspector, SerializeField] private bool isFloatSignal;
+		[HideInInspector, SerializeField] private bool isObjectSignal;
+		[HideInInspector, SerializeField] private bool isComponentSignal;
 
         public void Initialize ()
 		{
-			if (signal is TypedSignal<bool>)
+            signal.OnSignalEmitted.AddListener(HandleSignalEmitted);
+            if (signal is TypedSignal<bool>)
 				((TypedSignal<bool>)signal).OnSignalEmittedWithParam.AddListener(HandleBoolSignalEmitted);
 			else if (signal is TypedSignal<int>)
 				((TypedSignal<int>)signal).OnSignalEmittedWithParam.AddListener(HandleIntSignalEmitted);
@@ -74,13 +81,16 @@ namespace Kalkatos.UnityGame.Scriptable
 				((TypedSignal<string>)signal).OnSignalEmittedWithParam.AddListener(HandleStringSignalEmitted);
 			else if (signal is TypedSignal<float>)
 				((TypedSignal<float>)signal).OnSignalEmittedWithParam.AddListener(HandleFloatSignalEmitted);
-			else
-				signal.OnSignalEmitted.AddListener(HandleSignalEmitted);
+            else if (signal is TypedSignal<object>)
+                ((TypedSignal<object>)signal).OnSignalEmittedWithParam.AddListener(HandleObjectSignalEmitted);
+            else if (signal is TypedSignal<Component>)
+                ((TypedSignal<Component>)signal).OnSignalEmittedWithParam.AddListener(HandleComponentSignalEmitted);
 		}
 
 		public void Dispose ()
 		{
-			if (signal is TypedSignal<bool>)
+            signal?.OnSignalEmitted.RemoveListener(HandleSignalEmitted);
+            if (signal is TypedSignal<bool>)
 				((TypedSignal<bool>)signal)?.OnSignalEmittedWithParam.RemoveListener(HandleBoolSignalEmitted);
 			else if (signal is TypedSignal<int>)
 				((TypedSignal<int>)signal)?.OnSignalEmittedWithParam.RemoveListener(HandleIntSignalEmitted);
@@ -88,8 +98,10 @@ namespace Kalkatos.UnityGame.Scriptable
 				((TypedSignal<string>)signal)?.OnSignalEmittedWithParam.RemoveListener(HandleStringSignalEmitted);
 			else if (signal is TypedSignal<float>)
 				((TypedSignal<float>)signal).OnSignalEmittedWithParam.RemoveListener(HandleFloatSignalEmitted);
-			else
-				signal?.OnSignalEmitted.RemoveListener(HandleSignalEmitted);
+            else if (signal is TypedSignal<object>)
+                ((TypedSignal<object>)signal).OnSignalEmittedWithParam.RemoveListener(HandleObjectSignalEmitted);
+            else if (signal is TypedSignal<Component>)
+                ((TypedSignal<Component>)signal).OnSignalEmittedWithParam.RemoveListener(HandleComponentSignalEmitted);
 		}
 
 		public void EmitOnStart ()
@@ -104,6 +116,10 @@ namespace Kalkatos.UnityGame.Scriptable
                 HandleStringSignalEmitted(((TypedSignal<string>)signal).Value);
             else if (signal is TypedSignal<float>)
                 HandleFloatSignalEmitted(((TypedSignal<float>)signal).Value);
+            else if (signal is TypedSignal<object>)
+                HandleObjectSignalEmitted(((TypedSignal<object>)signal).Value);
+            else if (signal is TypedSignal<Component>)
+                HandleComponentSignalEmitted(((TypedSignal<Component>)signal).Value);
             else
                 HandleSignalEmitted();
         }
@@ -115,7 +131,9 @@ namespace Kalkatos.UnityGame.Scriptable
 			isIntSignal = signal != null && signal is TypedSignal<int>;
 			isStringSignal = signal != null && signal is TypedSignal<string>;
 			isFloatSignal = signal != null && signal is TypedSignal<float>;
-			isAnyOtherTypedSignal = isBoolSignal || isIntSignal || isStringSignal || isFloatSignal;
+            isObjectSignal = signal != null && signal is TypedSignal<object>;
+            isComponentSignal = signal != null && signal is TypedSignal<Component>;
+            isAnyOtherTypedSignal = isBoolSignal || isIntSignal || isStringSignal || isFloatSignal || isObjectSignal || isComponentSignal;
 		}
 
 		private void HandleSignalEmitted ()
@@ -146,5 +164,16 @@ namespace Kalkatos.UnityGame.Scriptable
 			foreach (var item in FloatValueBindings)
 				item.TreatValue(value);
 		}
-	}
+
+        private void HandleObjectSignalEmitted (object value)
+        {
+            action?.Invoke();
+        }
+
+		private void HandleComponentSignalEmitted (Component component)
+		{
+            foreach (var item in ComponentValueBindings)
+                item.TreatValue(component);
+        }
+    }
 }
