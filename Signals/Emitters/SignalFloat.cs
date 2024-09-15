@@ -22,5 +22,13 @@ namespace Kalkatos.UnityGame.Scriptable
 				lastLogTime = Time.time;
 			}
 		}
+
+		public void ParseString (string str)
+		{
+			if (float.TryParse(str, out float parsed))
+			{
+				EmitWithParam(parsed);
+			}
+		}
 	}
 }

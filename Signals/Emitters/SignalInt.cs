@@ -11,5 +11,13 @@ namespace Kalkatos.UnityGame.Scriptable
 		{
 			EmitWithParam(DefaultValue);
 		}
+
+		public void ParseString (string value)
+		{
+			if (int.TryParse(value, out int parsed))
+			{
+				EmitWithParam(parsed);
+			}
+		}
 	}
 }

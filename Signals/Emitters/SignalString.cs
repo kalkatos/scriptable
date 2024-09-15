@@ -11,5 +11,20 @@ namespace Kalkatos.UnityGame.Scriptable
 		{
 			EmitWithParam(DefaultValue);
 		}
-	}
+
+		public void EmitWithParam (int value)
+		{
+			EmitWithParam(value.ToString());
+		}
+
+        public void EmitWithParam (float value)
+        {
+            EmitWithParam(value.ToString());
+        }
+
+		public void EmitWithParam (bool value)
+		{
+			EmitWithParam(value.ToString());
+		}
+    }
 }
