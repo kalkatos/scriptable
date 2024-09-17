@@ -19,5 +19,10 @@ namespace Kalkatos.UnityGame.Scriptable
 				EmitWithParam(parsed);
 			}
 		}
+
+		public void EmitWithChildIndex (Transform child)
+		{
+			EmitWithParam(child.GetSiblingIndex());
+		}
 	}
 }
