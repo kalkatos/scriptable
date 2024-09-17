@@ -100,8 +100,8 @@ namespace Kalkatos.UnityGame.Scriptable
 		public void TreatValue (T value)
 		{
 			if (Equality == Equality.Any 
-				|| (Equality == Equality.Equals && value.Equals(ExpectedValue))
-				|| (Equality == Equality.NotEquals && !value.Equals(ExpectedValue))
+				|| (Equality == Equality.Equals && (ReferenceEquals(ExpectedValue, value) || value.Equals(ExpectedValue)))
+				|| (Equality == Equality.NotEquals && !ReferenceEquals(ExpectedValue, value) && !value.Equals(ExpectedValue))
 				|| (Equality == Equality.GreaterThan &&
 					((typeof(T) == typeof(int) && int.Parse(value.ToString()) > int.Parse(ExpectedValue.ToString()))
 					|| (typeof(T) == typeof(float) && float.Parse(value.ToString()) > float.Parse(ExpectedValue.ToString()))))
