@@ -128,7 +128,7 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 
 		public void GetMatch ()
 		{
-			NetworkClient.GetMatch(
+			NetworkClient.GetMatch(null,
 				(success) =>
 				{
 					SetAsConnected();
@@ -164,18 +164,18 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 		public void SendAction ()
 		{
 			ActionInfo action = StateBuilder.BuildChangedPieces(NetworkClient.StateInfo);
-            NetworkClient.SendAction(action,
+			NetworkClient.SendAction(action,
 				(success) =>
 				{
 					SetAsConnected();
 					OnSendActionSuccess?.Invoke();
-                },
+				},
 				(failure) =>
 				{
 					if (failure.Tag == NetworkErrorTag.NotConnected)
 						SetAsNotConnected();
 					else
-                            OnSendActionFailure?.Invoke();
+						OnSendActionFailure?.Invoke();
 				});
 		}
 
