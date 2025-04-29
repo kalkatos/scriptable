@@ -82,19 +82,19 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 #if ODIN_INSPECTOR
 		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Bool)]  
 #endif
-        public SignalBool BoolValue;
+		public SignalBool BoolValue;
 #if ODIN_INSPECTOR
 		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Int)]  
 #endif
-        public SignalInt IntValue;
+		public SignalInt IntValue;
 #if ODIN_INSPECTOR
 		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.Float)]  
 #endif
-        public SignalFloat FloatValue;
+		public SignalFloat FloatValue;
 #if ODIN_INSPECTOR
 		[HorizontalGroup(0.7f), HideLabel, ShowIf(nameof(Type), DataType.String)]  
 #endif
-        public SignalString StringValue;
+		public SignalString StringValue;
 
 		public enum DataType { Bool, Int, Float, String }
 

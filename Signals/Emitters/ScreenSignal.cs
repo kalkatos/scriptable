@@ -13,7 +13,7 @@ namespace Kalkatos.UnityGame.Scriptable
 #if ODIN_INSPECTOR
 		[ShowIf(nameof(IsScene))] 
 #endif
-        public bool LoadAsync;
+		public bool LoadAsync;
 
 		public override void Emit ()
 		{

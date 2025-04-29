@@ -16,7 +16,7 @@ namespace Kalkatos.UnityGame.Scriptable.Network
 #if ODIN_INSPECTOR
 		[InlineProperty, HideLabel]  
 #endif
-        public PlayerData Data;
+		public PlayerData Data;
 	}
 }
 
