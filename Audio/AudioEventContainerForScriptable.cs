@@ -129,29 +129,20 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 			for (int i = 0; i < Signals.Length; i++)
 			{
 				Signal signal = Signals[i];
-				if (signal is TypedSignal<string>)
+				switch (signal)
 				{
-					var typed = (TypedSignal<string>)signal;
-					typed.OnSignalEmittedWithParam.AddListener(Play);
-					return;
-				}
-				if (signal is TypedSignal<float>)
-				{
-					var typed = (TypedSignal<float>)signal;
-					typed.OnSignalEmittedWithParam.AddListener(Play);
-					return;
-				}
-				if (signal is TypedSignal<int>)
-				{
-					var typed = (TypedSignal<int>)signal;
-					typed.OnSignalEmittedWithParam.AddListener(Play);
-					return;
-				}
-				if (signal is TypedSignal<bool>)
-				{
-					var typed = (TypedSignal<bool>)signal;
-					typed.OnSignalEmittedWithParam.AddListener(Play);
-					return;
+					case TypedSignal<string> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.AddListener(Play);
+						continue;
+					case TypedSignal<float> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.AddListener(Play);
+						continue;
+					case TypedSignal<int> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.AddListener(Play);
+						continue;
+					case TypedSignal<bool> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.AddListener(Play);
+						continue;
 				}
 				signal.OnSignalEmitted.AddListener(Play);
 			}
@@ -162,29 +153,20 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 			for (int i = 0; i < Signals.Length; i++)
 			{
 				Signal signal = Signals[i];
-				if (signal is TypedSignal<string>)
+				switch (signal)
 				{
-					var typed = (TypedSignal<string>)signal;
-					typed.OnSignalEmittedWithParam.RemoveListener(Play);
-					return;
-				}
-				if (signal is TypedSignal<float>)
-				{
-					var typed = (TypedSignal<float>)signal;
-					typed.OnSignalEmittedWithParam.RemoveListener(Play);
-					return;
-				}
-				if (signal is TypedSignal<int>)
-				{
-					var typed = (TypedSignal<int>)signal;
-					typed.OnSignalEmittedWithParam.RemoveListener(Play);
-					return;
-				}
-				if (signal is TypedSignal<bool>)
-				{
-					var typed = (TypedSignal<bool>)signal;
-					typed.OnSignalEmittedWithParam.RemoveListener(Play);
-					return;
+					case TypedSignal<string> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.RemoveListener(Play);
+						continue;
+					case TypedSignal<float> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.RemoveListener(Play);
+						continue;
+					case TypedSignal<int> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.RemoveListener(Play);
+						continue;
+					case TypedSignal<bool> typedSignal:
+						typedSignal.OnSignalEmittedWithParam.RemoveListener(Play);
+						continue;
 				}
 				signal.OnSignalEmitted.RemoveListener(Play);
 			}
