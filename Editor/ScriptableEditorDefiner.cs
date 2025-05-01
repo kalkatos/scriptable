@@ -2,24 +2,27 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 using UnityEditor;
+using UnityEditor.Build;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Kalkatos.Scriptable.Unity
 {
-    [InitializeOnLoad]
-    public class ScriptableEditorDefiner : Editor
-    {
-        public static readonly string[] Symbols = new string[] { "KALKATOS_SCRIPTABLE" };
+	[InitializeOnLoad]
+	public class ScriptableEditorDefiner : Editor
+	{
+		public static readonly string[] Symbols = new string[] { "KALKATOS_SCRIPTABLE" };
 
-        static ScriptableEditorDefiner ()
-        {
-            string definesString = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
-            List<string> allDefines = definesString.Split(';').ToList();
-            allDefines.AddRange(Symbols.Except(allDefines));
-            PlayerSettings.SetScriptingDefineSymbolsForGroup(
-                EditorUserBuildSettings.selectedBuildTargetGroup,
-                string.Join(";", allDefines.ToArray()));
-        }
-    }
+		static ScriptableEditorDefiner ()
+		{
+			BuildTargetGroup targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
+			var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(targetGroup);
+			string definesString = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+			List<string> allDefines = definesString.Split(';').ToList();
+			allDefines.AddRange(Symbols.Except(allDefines));
+			PlayerSettings.SetScriptingDefineSymbols(
+				namedBuildTarget,
+				string.Join(";", allDefines.ToArray()));
+		}
+	}
 }
