@@ -37,28 +37,24 @@ namespace Kalkatos.UnityGame.Scriptable
                 bind.Initialize(this);
                 switch (bind.Signal)
                 {
-                    case SignalBool:
-                        SignalBool signalBool = (SignalBool)bind.Signal;
+                    case SignalBool signalBool:
                         bool defaultBool = bool.TryParse(bind.DefaultValue, out bool parsedBool) ? parsedBool : false;
                         bool boolValue = Storage.Load(bind.Key, defaultBool.ToString()) == true.ToString();
                         signalBool.Value = boolValue;
                         signalBool.DefaultValue = boolValue;
                         break;
-                    case SignalString:
-                        SignalString signalString = (SignalString)bind.Signal;
+                    case SignalString signalString:
                         string stringValue = Storage.Load(bind.Key, bind.DefaultValue);
                         signalString.Value = stringValue;
                         signalString.DefaultValue = stringValue;
                         break;
-                    case SignalInt:
-                        SignalInt signalInt = (SignalInt)bind.Signal;
+                    case SignalInt signalInt:
                         int defaultInt = int.TryParse(bind.DefaultValue, out int parsedInt) ? parsedInt : 0;
                         int intValue = Storage.Load(bind.Key, defaultInt);
                         signalInt.Value = intValue;
                         signalInt.DefaultValue = intValue;
                         break;
-                    case SignalFloat:
-                        SignalFloat signalFloat = (SignalFloat)bind.Signal;
+                    case SignalFloat signalFloat:
                         float defaultFloat = float.TryParse(bind.DefaultValue, out float parsedFloat) ? parsedFloat : 0f;
                         float floatValue = Storage.Load(bind.Key, defaultFloat);
                         signalFloat.Value = floatValue;
