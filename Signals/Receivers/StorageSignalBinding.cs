@@ -100,17 +100,17 @@ namespace Kalkatos.UnityGame.Scriptable
         {
             switch (Signal)
             {
-                case TypedSignal<bool>:
-                    ((TypedSignal<bool>)Signal).OnSignalEmittedWithParam.AddListener(OnBoolValueChanged);
+                case TypedSignal<bool> signalBool:
+					signalBool.OnSignalEmittedWithParam.AddListener(OnBoolValueChanged);
                     break;
-                case TypedSignal<string>:
-                    ((TypedSignal<string>)Signal).OnSignalEmittedWithParam.AddListener(OnStringValueChanged);
+                case TypedSignal<string> signalString:
+					signalString.OnSignalEmittedWithParam.AddListener(OnStringValueChanged);
                     break;
-                case TypedSignal<int>:
-                    ((TypedSignal<int>)Signal).OnSignalEmittedWithParam.AddListener(OnIntValueChanged);
+                case TypedSignal<int> signalInt:
+					signalInt.OnSignalEmittedWithParam.AddListener(OnIntValueChanged);
                     break;
-                case TypedSignal<float>:
-                    ((TypedSignal<float>)Signal).OnSignalEmittedWithParam.AddListener(OnFloatValueChanged);
+                case TypedSignal<float> signalFloat:
+					signalFloat.OnSignalEmittedWithParam.AddListener(OnFloatValueChanged);
                     break;
             }
         }
@@ -120,17 +120,17 @@ namespace Kalkatos.UnityGame.Scriptable
             SaveAll();
             switch (Signal)
             {
-                case TypedSignal<bool>:
-                    ((TypedSignal<bool>)Signal).OnSignalEmittedWithParam.RemoveListener(OnBoolValueChanged);
+                case TypedSignal<bool> signalBool:
+					signalBool.OnSignalEmittedWithParam.RemoveListener(OnBoolValueChanged);
                     break;
-                case TypedSignal<string>:
-                    ((TypedSignal<string>)Signal).OnSignalEmittedWithParam.RemoveListener(OnStringValueChanged);
+                case TypedSignal<string> singalString:
+					singalString.OnSignalEmittedWithParam.RemoveListener(OnStringValueChanged);
                     break;
-                case TypedSignal<int>:
-                    ((TypedSignal<int>)Signal).OnSignalEmittedWithParam.RemoveListener(OnIntValueChanged);
+                case TypedSignal<int> signalInt:
+					signalInt.OnSignalEmittedWithParam.RemoveListener(OnIntValueChanged);
                     break;
-                case TypedSignal<float>:
-                    ((TypedSignal<float>)Signal).OnSignalEmittedWithParam.RemoveListener(OnFloatValueChanged);
+                case TypedSignal<float> signalFloat:
+					signalFloat.OnSignalEmittedWithParam.RemoveListener(OnFloatValueChanged);
                     break;
             }
         }
