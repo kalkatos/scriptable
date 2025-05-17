@@ -2,7 +2,6 @@
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
 using UnityEditor;
-using UnityEditor.Build;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -15,13 +14,11 @@ namespace Kalkatos.Scriptable.Unity
 
 		static ScriptableEditorDefiner ()
 		{
-			BuildTargetGroup targetGroup = EditorUserBuildSettings.selectedBuildTargetGroup;
-			var namedBuildTarget = NamedBuildTarget.FromBuildTargetGroup(targetGroup);
-			string definesString = PlayerSettings.GetScriptingDefineSymbols(namedBuildTarget);
+			string definesString = PlayerSettings.GetScriptingDefineSymbolsForGroup(EditorUserBuildSettings.selectedBuildTargetGroup);
 			List<string> allDefines = definesString.Split(';').ToList();
 			allDefines.AddRange(Symbols.Except(allDefines));
-			PlayerSettings.SetScriptingDefineSymbols(
-				namedBuildTarget,
+			PlayerSettings.SetScriptingDefineSymbolsForGroup(
+				EditorUserBuildSettings.selectedBuildTargetGroup,
 				string.Join(";", allDefines.ToArray()));
 		}
 	}
