@@ -40,10 +40,6 @@ namespace Kalkatos.Scriptable.Unity
             if (allFloatSignals != null)
                 foreach (var item in allFloatSignals)
                     item.Value = item.DefaultValue;
-            ScreenSignal[] allScreenSignals = FindAssets<ScreenSignal>();
-            if (allScreenSignals != null)
-                foreach (var item in allScreenSignals)
-                    item.Value = false;
             SignalState[] allStateSignals = FindAssets<SignalState>();
             if (allStateSignals != null)
                 foreach (var item in allStateSignals)
