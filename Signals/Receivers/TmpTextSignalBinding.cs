@@ -6,17 +6,17 @@ using UnityEngine;
 
 namespace Kalkatos.UnityGame.Scriptable
 {
-    public class TmpTextSignalBinding : MonoBehaviour
+	public class TmpTextSignalBinding : MonoBehaviour
 	{
 		[SerializeField] private TypedSignal<string> signal;
 #if ODIN_INSPECTOR
-		[HideIf(nameof(textComponentInputField))] 
+		[HideIf(nameof(textComponentInputField))]
 #endif
-        [SerializeField] private TMP_Text textComponent;
+		[SerializeField] private TMP_Text textComponent;
 #if ODIN_INSPECTOR
-		[HideIf(nameof(textComponent))] 
+		[HideIf(nameof(textComponent))]
 #endif
-        [SerializeField] private TMP_InputField textComponentInputField;
+		[SerializeField] private TMP_InputField textComponentInputField;
 
 		private void Reset ()
 		{

@@ -1,5 +1,5 @@
-﻿using UnityEngine;
-using Kalkatos.UnityGame.Audio;
+﻿using Kalkatos.UnityGame.Audio;
+using UnityEngine;
 
 namespace Kalkatos.UnityGame.Scriptable.Audio
 {
@@ -70,7 +70,7 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 					typed.OnSignalEmittedWithParam.AddListener(Play);
 					return;
 				}
-				signal.OnSignalEmitted.AddListener(Play); 
+				signal.OnSignalEmitted.AddListener(Play);
 			}
 		}
 

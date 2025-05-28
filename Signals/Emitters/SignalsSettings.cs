@@ -17,7 +17,7 @@ namespace Kalkatos.UnityGame.Scriptable
 		[UnityEditor.MenuItem("Tools/Signals/Debug OFF")]
 		public static void TurnOffSignalDebug ()
 		{
-			Instance.EmitDebug = false; 
+			Instance.EmitDebug = false;
 		}
 #endif
 	}

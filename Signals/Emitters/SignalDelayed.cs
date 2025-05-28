@@ -1,5 +1,5 @@
 ﻿#if ODIN_INSPECTOR
-using Sirenix.OdinInspector;  
+using Sirenix.OdinInspector;
 #endif
 using System;
 using UnityEngine;
@@ -11,16 +11,16 @@ namespace Kalkatos.UnityGame.Scriptable
 	public class SignalDelayed : TypedSignal<float>
 	{
 #if ODIN_INSPECTOR
-		[PropertyOrder(2)]  
+		[PropertyOrder(2)]
 #endif
-        public UnityEvent DelayedEvent;
+		public UnityEvent DelayedEvent;
 
-        public override void Emit ()
-        {
+		public override void Emit ()
+		{
 			EmitWithParam(Value);
-        }
+		}
 
-        public override void EmitWithParam (float seconds)
+		public override void EmitWithParam (float seconds)
 		{
 			Log();
 			OnSignalEmittedWithParam?.Invoke(seconds);
@@ -47,7 +47,7 @@ namespace Kalkatos.UnityGame.Scriptable
 			{
 				Value = seconds;
 				Logger.Log($"[SignalDelayed] Waiting seconds: {Value}");
-				EmitWithParam(seconds); 
+				EmitWithParam(seconds);
 			}
 		}
 	}

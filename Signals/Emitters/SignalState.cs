@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 #if ODIN_INSPECTOR
-using Sirenix.OdinInspector;  
+using Sirenix.OdinInspector;
 #endif
 
 namespace Kalkatos.UnityGame.Scriptable
@@ -9,9 +9,9 @@ namespace Kalkatos.UnityGame.Scriptable
 	public class SignalState : TypedSignal<string>
 	{
 #if ODIN_INSPECTOR
-		[PropertyOrder(0)] 
+		[PropertyOrder(0)]
 #endif
-        public string Key;
+		public string Key;
 
 		public override void Emit ()
 		{

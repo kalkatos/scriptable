@@ -1,5 +1,5 @@
 ﻿#if ODIN_INSPECTOR
-using Sirenix.OdinInspector;  
+using Sirenix.OdinInspector;
 #endif
 using System;
 using UnityEngine;
@@ -25,30 +25,30 @@ namespace Kalkatos.UnityGame.Scriptable
 		}
 
 #if ODIN_INSPECTOR
-        [Button("Emit"), PropertyOrder(99)]
+		[Button("Emit"), PropertyOrder(99)]
 #endif
-        protected void Emit_Debug ()
-        {
-            Emit();
-        }
-    }
+		protected void Emit_Debug ()
+		{
+			Emit();
+		}
+	}
 
 	public abstract class TypedSignal<T> : Signal, IValueGetter<T>
 	{
 		public UnityEvent<T> OnSignalEmittedWithParam;
 
 #if ODIN_INSPECTOR
-		[PropertyOrder(1)] 
+		[PropertyOrder(1)]
 #endif
-        public T Value;
+		public T Value;
 		[Space(10)]
 #if ODIN_INSPECTOR
-		[PropertyOrder(5)] 
+		[PropertyOrder(5)]
 #endif
-        [SerializeField] private ValueBinding<T>[] ValueBindings;
+		[SerializeField] private ValueBinding<T>[] ValueBindings;
 
-        public override void Emit ()
-        {
+		public override void Emit ()
+		{
 			Log();
 			OnSignalEmitted?.Invoke();
 			OnSignalEmittedWithParam?.Invoke(Value);
@@ -57,7 +57,7 @@ namespace Kalkatos.UnityGame.Scriptable
 					item.TreatValue(Value);
 		}
 
-        public virtual void EmitWithParam (T param) 
+		public virtual void EmitWithParam (T param)
 		{
 			Value = param;
 			Log();
@@ -76,9 +76,9 @@ namespace Kalkatos.UnityGame.Scriptable
 		}
 
 #if ODIN_INSPECTOR
-        [Button("Emit With Param"), PropertyOrder(99)]
+		[Button("Emit With Param"), PropertyOrder(99)]
 #endif
-        protected void EmitWithParam_Debug ()
+		protected void EmitWithParam_Debug ()
 		{
 			EmitWithParam(GetValue());
 		}
@@ -88,18 +88,18 @@ namespace Kalkatos.UnityGame.Scriptable
 	public class ValueBinding<T>
 	{
 #if ODIN_INSPECTOR
-		[HorizontalGroup(0.7f), LabelText("Condition")] 
+		[HorizontalGroup(0.7f), LabelText("Condition")]
 #endif
-        public Equality Equality;
+		public Equality Equality;
 #if ODIN_INSPECTOR
-		[HorizontalGroup, HideLabel, HideIf(nameof(Equality), Equality.Any)]  
+		[HorizontalGroup, HideLabel, HideIf(nameof(Equality), Equality.Any)]
 #endif
-        public T ExpectedValue;
+		public T ExpectedValue;
 		public UnityEvent<T> Event;
 
 		public void TreatValue (T value)
 		{
-			if (Equality == Equality.Any 
+			if (Equality == Equality.Any
 				|| (Equality == Equality.Equals && (ReferenceEquals(ExpectedValue, value) || value.Equals(ExpectedValue)))
 				|| (Equality == Equality.NotEquals && !ReferenceEquals(ExpectedValue, value) && !value.Equals(ExpectedValue))
 				|| (Equality == Equality.GreaterThan &&

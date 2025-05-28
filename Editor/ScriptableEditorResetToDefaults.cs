@@ -7,43 +7,43 @@ using UnityEngine;
 
 namespace Kalkatos.Scriptable.Unity
 {
-    public class ScriptableEditorResetToDefaults : Editor
-    {
-        private static T[] FindAssets<T> () where T : Object
-        { 
-            var guids = AssetDatabase.FindAssets($"t:{typeof(T)}");
-            var assets = new T[guids.Length];
-            for (int i = 0; i < guids.Length; i++) 
-            {
-                var path = AssetDatabase.GUIDToAssetPath(guids[i]); 
-                assets[i] = (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
-            } 
-            return assets; 
-        }
+	public class ScriptableEditorResetToDefaults : Editor
+	{
+		private static T[] FindAssets<T> () where T : Object
+		{
+			var guids = AssetDatabase.FindAssets($"t:{typeof(T)}");
+			var assets = new T[guids.Length];
+			for (int i = 0; i < guids.Length; i++)
+			{
+				var path = AssetDatabase.GUIDToAssetPath(guids[i]);
+				assets[i] = (T)AssetDatabase.LoadAssetAtPath(path, typeof(T));
+			}
+			return assets;
+		}
 
-        [InitializeOnLoadMethod]
-        private static void ResetAllTypedSignals ()
-        {
-            SignalBool[] allBoolSignals = FindAssets<SignalBool>();
-            if (allBoolSignals != null)
-                foreach (var item in allBoolSignals)
-                    item.Value = item.DefaultValue;
-            SignalString[] allStringSignals = FindAssets<SignalString>();
-            if (allStringSignals != null)
-                foreach (var item in allStringSignals)
-                    item.Value = item.DefaultValue;
-            SignalInt[] allIntSignals = FindAssets<SignalInt>();
-            if (allIntSignals != null)
-                foreach (var item in allIntSignals)
-                    item.Value = item.DefaultValue; 
-            SignalFloat[] allFloatSignals = FindAssets<SignalFloat>();
-            if (allFloatSignals != null)
-                foreach (var item in allFloatSignals)
-                    item.Value = item.DefaultValue;
-            SignalState[] allStateSignals = FindAssets<SignalState>();
-            if (allStateSignals != null)
-                foreach (var item in allStateSignals)
-                    item.Value = "";
-        }
-    }
+		[InitializeOnLoadMethod]
+		private static void ResetAllTypedSignals ()
+		{
+			SignalBool[] allBoolSignals = FindAssets<SignalBool>();
+			if (allBoolSignals != null)
+				foreach (var item in allBoolSignals)
+					item.Value = item.DefaultValue;
+			SignalString[] allStringSignals = FindAssets<SignalString>();
+			if (allStringSignals != null)
+				foreach (var item in allStringSignals)
+					item.Value = item.DefaultValue;
+			SignalInt[] allIntSignals = FindAssets<SignalInt>();
+			if (allIntSignals != null)
+				foreach (var item in allIntSignals)
+					item.Value = item.DefaultValue;
+			SignalFloat[] allFloatSignals = FindAssets<SignalFloat>();
+			if (allFloatSignals != null)
+				foreach (var item in allFloatSignals)
+					item.Value = item.DefaultValue;
+			SignalState[] allStateSignals = FindAssets<SignalState>();
+			if (allStateSignals != null)
+				foreach (var item in allStateSignals)
+					item.Value = "";
+		}
+	}
 }

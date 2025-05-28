@@ -1,10 +1,10 @@
 // (c) 2023 Alex Kalkatos
 // This code is licensed under MIT license (see LICENSE.txt for details)
 
-using UnityEditor;
-using UnityEditor.Build;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
+using UnityEditor.Build;
 
 namespace Kalkatos.Scriptable.Unity
 {
