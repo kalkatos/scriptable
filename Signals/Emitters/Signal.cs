@@ -119,6 +119,13 @@ namespace Kalkatos.UnityGame.Scriptable
 		}
 	}
 
+	[Serializable]
+	public class KeyValueBinding<T> : ValueBinding<T>
+	{
+		[PropertyOrder(-1)]
+		public string Key;
+	}
+
 	public enum Equality
 	{
 		Any,
