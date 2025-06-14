@@ -4,7 +4,7 @@ using UnityEngine.SceneManagement;
 namespace Kalkatos.UnityGame.Scriptable
 {
 	[CreateAssetMenu(fileName = "NewScreenSignal", menuName = "Signals/Signal (Screen)", order = 3)]
-	public class ScreenSignal : Signal
+	public class ScreenSignal : SignalBase
 	{
 		public bool LoadAsync;
 

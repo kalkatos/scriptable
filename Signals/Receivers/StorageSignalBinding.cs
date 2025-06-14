@@ -80,7 +80,7 @@ namespace Kalkatos.UnityGame.Scriptable
 	{
 		public string Key;
 		public string DefaultValue;
-		public Signal Signal;
+		public SignalBase Signal;
 
 		private MonoBehaviour mono;
 		private WaitForSeconds waitHalfSecond = new WaitForSeconds(0.5f);

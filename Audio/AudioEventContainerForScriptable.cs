@@ -28,7 +28,7 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 	[System.Serializable]
 	public class SignalToMusic
 	{
-		public Signal[] Signals;
+		public SignalBase[] Signals;
 		public BackgroundMusic Music;
 
 		public void Play ()
@@ -45,7 +45,7 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 		{
 			for (int i = 0; i < Signals.Length; i++)
 			{
-				Signal signal = Signals[i];
+				SignalBase signal = Signals[i];
 				if (signal is TypedSignal<string>)
 				{
 					var typed = (TypedSignal<string>)signal;
@@ -78,7 +78,7 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 		{
 			for (int i = 0; i < Signals.Length; i++)
 			{
-				Signal signal = Signals[i];
+				SignalBase signal = Signals[i];
 				if (signal is TypedSignal<string>)
 				{
 					var typed = (TypedSignal<string>)signal;
@@ -111,7 +111,7 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 	[System.Serializable]
 	public class SignalToSfx
 	{
-		public Signal[] Signals;
+		public SignalBase[] Signals;
 		public SoundEffect SoundEffect;
 
 		public void Play ()
@@ -128,7 +128,7 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 		{
 			for (int i = 0; i < Signals.Length; i++)
 			{
-				Signal signal = Signals[i];
+				SignalBase signal = Signals[i];
 				switch (signal)
 				{
 					case TypedSignal<string> typedSignal:
@@ -152,7 +152,7 @@ namespace Kalkatos.UnityGame.Scriptable.Audio
 		{
 			for (int i = 0; i < Signals.Length; i++)
 			{
-				Signal signal = Signals[i];
+				SignalBase signal = Signals[i];
 				switch (signal)
 				{
 					case TypedSignal<string> typedSignal:

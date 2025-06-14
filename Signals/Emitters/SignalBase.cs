@@ -8,7 +8,7 @@ using UnityEngine.Events;
 namespace Kalkatos.UnityGame.Scriptable
 {
 	[CreateAssetMenu(fileName = "NewSignal", menuName = "Signals/Signal ()", order = 0)]
-	public class Signal : ScriptableObject
+	public class SignalBase : ScriptableObject
 	{
 		public UnityEvent OnSignalEmitted;
 
@@ -33,7 +33,7 @@ namespace Kalkatos.UnityGame.Scriptable
 		}
 	}
 
-	public abstract class TypedSignal<T> : Signal, IValueGetter<T>
+	public abstract class TypedSignal<T> : SignalBase, IValueGetter<T>
 	{
 		public UnityEvent<T> OnSignalEmittedWithParam;
 

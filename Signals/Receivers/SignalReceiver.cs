@@ -36,7 +36,7 @@ namespace Kalkatos.UnityGame.Scriptable
 #if ODIN_INSPECTOR
 		[OnValueChanged(nameof(VerifySignal))]
 #endif
-		[SerializeField] private Signal signal;
+		[SerializeField] private SignalBase signal;
 		[SerializeField] private bool emitOnStart;
 #if ODIN_INSPECTOR
 		[HideIf(nameof(isAnyOtherTypedSignal))]
