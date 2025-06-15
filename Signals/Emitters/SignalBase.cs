@@ -8,9 +8,15 @@ using UnityEngine.Events;
 namespace Kalkatos.UnityGame.Scriptable
 {
 	[CreateAssetMenu(fileName = "NewSignal", menuName = "Signals/Signal ()", order = 0)]
-	public class SignalBase : ScriptableObject
+	public class SignalBase : ScriptableObject, ISignal
 	{
 		public UnityEvent OnSignalEmitted;
+
+		public event Action OnEmitted
+		{
+			add => OnSignalEmitted.AddListener(value.Invoke);
+			remove => OnSignalEmitted.RemoveListener(value.Invoke);
+		}
 
 		public virtual void Emit ()
 		{
@@ -33,14 +39,20 @@ namespace Kalkatos.UnityGame.Scriptable
 		}
 	}
 
-	public abstract class TypedSignal<T> : SignalBase, IValueGetter<T>
+	public abstract class TypedSignal<T> : SignalBase, IValueGetter<T>, ISignal<T>
 	{
 		public UnityEvent<T> OnSignalEmittedWithParam;
+
+		public event Action<T> OnEmittedWithParam
+		{
+			add => OnSignalEmittedWithParam.AddListener(value.Invoke);
+			remove => OnSignalEmittedWithParam.RemoveListener(value.Invoke);
+		}
 
 #if ODIN_INSPECTOR
 		[PropertyOrder(1)]
 #endif
-		public T Value;
+		public virtual T Value { get; set; }
 		[Space(10)]
 #if ODIN_INSPECTOR
 		[PropertyOrder(5)]

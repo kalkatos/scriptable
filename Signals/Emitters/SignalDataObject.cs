@@ -3,7 +3,7 @@
 namespace Kalkatos.UnityGame.Scriptable
 {
 	[CreateAssetMenu(fileName = "NewSignalScriptableObject", menuName = "Signals/Signal (ScriptableObject)", order = 7)]
-	public class SignalScriptableObject : TypedSignal<ScriptableObject>
+	public class SignalDataObject : TypedSignal<ScriptableObject>
 	{
 		public ScriptableObject DefaultValue;
 
