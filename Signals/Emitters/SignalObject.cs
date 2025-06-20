@@ -42,5 +42,11 @@ namespace Kalkatos.UnityGame.Scriptable
 				DefaultValue = DefaultScriptable;
 			}
 		}
+
+		protected override void Log ()
+		{
+			if (SignalsSettings.Instance.EmitDebug)
+				this.Log($"{name} emitted. Value = {Value?.GetType()}");
+		}
 	}
 }
