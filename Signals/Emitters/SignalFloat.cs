@@ -30,5 +30,11 @@ namespace Kalkatos.UnityGame.Scriptable
 				EmitWithParam(parsed);
 			}
 		}
+
+		public void Add (float value)
+		{
+			Value += value;
+			EmitWithParam(Value);
+		}
 	}
 }

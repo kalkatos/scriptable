@@ -24,5 +24,11 @@ namespace Kalkatos.UnityGame.Scriptable
 		{
 			EmitWithParam(child.GetSiblingIndex());
 		}
+
+		public void Add (int value)
+		{
+			Value += value;
+			EmitWithParam(Value);
+		}
 	}
 }
