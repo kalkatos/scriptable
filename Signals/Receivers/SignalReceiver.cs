@@ -59,6 +59,10 @@ namespace Kalkatos.UnityGame.Scriptable
 #endif
 		[SerializeField] private ValueBinding<float>[] FloatValueBindings;
 #if ODIN_INSPECTOR
+		[ShowIf(nameof(isObjectSignal))]
+#endif
+		[SerializeField] private ValueBinding<object>[] ObjectValueBindings;
+#if ODIN_INSPECTOR
 		[ShowIf(nameof(isComponentSignal))]
 #endif
 		[SerializeField] private ValueBinding<Component>[] ComponentValueBindings;
@@ -180,7 +184,8 @@ namespace Kalkatos.UnityGame.Scriptable
 
 		private void HandleObjectSignalEmitted (object value)
 		{
-			action?.Invoke();
+			foreach (var item in ObjectValueBindings)
+				item.TreatValue(value);
 		}
 
 		private void HandleComponentSignalEmitted (Component component)

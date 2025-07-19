@@ -111,26 +111,19 @@ namespace Kalkatos.UnityGame.Scriptable
 
 		public void TreatValue (T value)
 		{
-			try
+			bool shouldInvoke = Equality switch
 			{
-				bool shouldInvoke = Equality switch
-				{
-					Equality.Any => true,
-					Equality.Equals => ReferenceEquals(ExpectedValue, value) || ExpectedValue.Equals(value),
-					Equality.NotEquals => !ReferenceEquals(ExpectedValue, value) && !ExpectedValue.Equals(value),
-					Equality.GreaterThan => (typeof(T) == typeof(int) && int.Parse(value.ToString()) > int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) > float.Parse(ExpectedValue.ToString())),
-					Equality.LessThan => (typeof(T) == typeof(int) && int.Parse(value.ToString()) < int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) < float.Parse(ExpectedValue.ToString())),
-					Equality.GreaterThanOrEquals => (typeof(T) == typeof(int) && int.Parse(value.ToString()) >= int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) >= float.Parse(ExpectedValue.ToString())),
-					Equality.LessThanOrEquals => (typeof(T) == typeof(int) && int.Parse(value.ToString()) <= int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) <= float.Parse(ExpectedValue.ToString())),
-					_ => false
-				};
-				if (shouldInvoke)
-					Event?.Invoke(value);
-			}
-			catch (Exception e)
-			{
-				Logger.Log(e.Message);
-			}
+				Equality.Any => true,
+				Equality.Equals => ReferenceEquals(ExpectedValue, value) || ExpectedValue.Equals(value),
+				Equality.NotEquals => !ReferenceEquals(ExpectedValue, value) && !ExpectedValue.Equals(value),
+				Equality.GreaterThan => (typeof(T) == typeof(int) && int.Parse(value.ToString()) > int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) > float.Parse(ExpectedValue.ToString())),
+				Equality.LessThan => (typeof(T) == typeof(int) && int.Parse(value.ToString()) < int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) < float.Parse(ExpectedValue.ToString())),
+				Equality.GreaterThanOrEquals => (typeof(T) == typeof(int) && int.Parse(value.ToString()) >= int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) >= float.Parse(ExpectedValue.ToString())),
+				Equality.LessThanOrEquals => (typeof(T) == typeof(int) && int.Parse(value.ToString()) <= int.Parse(ExpectedValue.ToString())) || (typeof(T) == typeof(float) && float.Parse(value.ToString()) <= float.Parse(ExpectedValue.ToString())),
+				_ => false
+			};
+			if (shouldInvoke)
+				Event?.Invoke(value);
 		}
 	}
 
