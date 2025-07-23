@@ -13,6 +13,16 @@ namespace Kalkatos.UnityGame.Scriptable
 		protected Dictionary<SignalFloat, Action<float>> floatListeners = new();
 		protected Dictionary<SignalString, Action<string>> stringListeners = new();
 
+		protected virtual void Awake ()
+		{
+			Initialize();
+			RegisterListeners();
+		}
+
+		protected virtual void Initialize () { }
+
+		protected virtual void RegisterListeners () { }
+
 		protected virtual void OnDestroy ()
 		{
 			foreach (var listener in listeners)
