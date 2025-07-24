@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Kalkatos.UnityGame.Scriptable
 {
-	public class KalkatosBehaviour : MonoBehaviour
+	public class ScriptableBehaviour : MonoBehaviour
 	{
 		protected Dictionary<SignalBase, Action> listeners = new();
 		protected Dictionary<SignalObject, Action<object>> objectListeners = new();
