@@ -96,10 +96,7 @@ namespace Kalkatos.UnityGame.Scriptable
 				return;
 			}
 			if (!registry.mustUpdateSignalRegistry)
-			{
-				registry.Log("No need to update signals.");
 				return;
-			}
 			registry.mustUpdateSignalRegistry = false;
 			registry.Log("Updating SignalRegistry fields...");
 			bool updated = false;
